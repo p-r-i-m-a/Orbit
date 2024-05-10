@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Media;
 using Orbit.Content;
 using System;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 
 namespace Orbit
 {
@@ -40,41 +41,34 @@ namespace Orbit
         {
             screen = Screen.intro;
 
+            bckgrnd = Content.Load<Texture2D>("background");
 
             window = new Rectangle(0, 0, 800, 500);
             _graphics.PreferredBackBufferWidth = window.Width;
             _graphics.PreferredBackBufferHeight = window.Height;
             _graphics.ApplyChanges();
 
-            Random generator = new Random();
-            int x, y;
-
-
-            star1 = new star(starB, new Rectangle(400, 250, 29, 29), new Vector2(0, 0), window);
-
-            x = generator.Next();
-            y = generator.Next();
-
-            star2 =
-            star3 =
-            star4 =
-
-
-
-
-
 
 
             base.Initialize();
+
+
+            
+
+
+
+
+
+
+
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            fontText = Content.Load<SpriteFont>("spriteFont");
+            fontText = Content.Load<SpriteFont>("font");
 
-            bckgrnd = Content.Load<Texture2D>("background");
             starB = Content.Load<Texture2D>("starB");
             starY = Content.Load<Texture2D>("starY");
             starR = Content.Load<Texture2D>("starR");
@@ -93,6 +87,50 @@ namespace Orbit
 
 
 
+            Random generator = new Random();
+            double xPos, yPos, xSpeed, ySpeed, G, M, d, r, sMass, sRadius;
+            sMass = 230;
+            sRadius = 6900;
+
+            G = 0;
+            M = sMass * 6;
+            r = sRadius * 14;
+
+
+            xSpeed = Math.Sqrt(G*M/r)/10;
+            ySpeed = 1;
+
+
+
+
+            star1 = new star(starB, new Rectangle(400, 250, 29, 29), new Vector2(0, 0), window);
+
+            xPos = generator.Next();
+            yPos = generator.Next();
+
+            star2 = new star(starR, new Rectangle(400, 250, 29, 29), new Vector2(0, 0), window);
+
+            xPos = generator.Next();
+            yPos = generator.Next();
+
+            star3 = new star(starY, new Rectangle(400, 250, 29, 29), new Vector2(0, 0), window);
+
+            xPos = generator.Next();
+            yPos = generator.Next();
+
+            star4 = new star(blackHole, new Rectangle(400, 250, 29, 29), new Vector2(0, 0), window);
+
+            xPos = generator.Next();
+            yPos = generator.Next();
+
+
+            if (screen == Screen.intro)
+            {
+                
+
+            }
+
+
             if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
             {
 
@@ -107,7 +145,15 @@ namespace Orbit
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            _spriteBatch.Begin();
 
+            _spriteBatch.Draw(bckgrnd, new Rectangle(0, 0, 800, 500), Color.White);
+
+
+
+            star1.Draw(_spriteBatch);
+
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
