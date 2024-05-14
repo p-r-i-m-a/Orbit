@@ -53,11 +53,15 @@ namespace Orbit
             base.Initialize();
 
 
+            star1 = new star(starB, new Rectangle(0, 0, 29, 29), 80, -4, new Vector2(371, 221));
+            star2 = new star(starR, new Rectangle(0, 0, 29, 29), 80, 3, new Vector2(371, 221));
+
+            star3 = new star(starY, new Rectangle(0, 0, 29, 29), 120, 2, new Vector2(400, 250));
+            star4 = new star(blackHole, new Rectangle(0, 0, 28, 21), 160, 1, new Vector2(400, 250));
+
+
+
             
-
-
-
-
 
 
 
@@ -88,45 +92,31 @@ namespace Orbit
 
 
             Random generator = new Random();
-            double xPos, yPos, xSpeed, ySpeed, G, M, d, r, sMass, sRadius;
-            sMass = 230;
-            sRadius = 6900;
-
-            G = 0;
-            M = sMass * 6;
-            r = sRadius * 14;
-
-
-            xSpeed = Math.Sqrt(G*M/r)/10;
-            ySpeed = 1;
 
 
 
 
-            star1 = new star(starB, new Rectangle(400, 250, 29, 29), new Vector2(0, 0), window);
 
-            xPos = generator.Next();
-            yPos = generator.Next();
 
-            star2 = new star(starR, new Rectangle(400, 250, 29, 29), new Vector2(0, 0), window);
+            
 
-            xPos = generator.Next();
-            yPos = generator.Next();
 
-            star3 = new star(starY, new Rectangle(400, 250, 29, 29), new Vector2(0, 0), window);
 
-            xPos = generator.Next();
-            yPos = generator.Next();
 
-            star4 = new star(blackHole, new Rectangle(400, 250, 29, 29), new Vector2(0, 0), window);
 
-            xPos = generator.Next();
-            yPos = generator.Next();
+
+
 
 
             if (screen == Screen.intro)
             {
-                
+                //star1.SetCenterPosition(new Vector2(mouseState.X, mouseState.Y));
+                star2.SetCenterPosition(new Vector2(star1.Bounds.X, star1.Bounds.Y));
+;
+                star1.Update(gameTime);
+
+                star2.Update(gameTime);
+
 
             }
 
@@ -149,9 +139,16 @@ namespace Orbit
 
             _spriteBatch.Draw(bckgrnd, new Rectangle(0, 0, 800, 500), Color.White);
 
+            if(screen == Screen.intro)
+            {
+                star1.Draw(_spriteBatch);
+                star2.Draw(_spriteBatch);
+
+            }
+            
 
 
-            star1.Draw(_spriteBatch);
+            
 
             _spriteBatch.End();
             base.Draw(gameTime);

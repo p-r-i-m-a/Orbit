@@ -12,47 +12,50 @@ namespace Orbit.Content
     {
         private Texture2D _texture;
         private Rectangle _rectangle;
-        private Vector2 _speed;
+        private float _orbitRadius;
+        private float _orbitSpeed;
+        private float _angle;
+        private Vector2 _centerPosition;
 
-        public star (Texture2D texture, Rectangle rect, Vector2 speed, Rectangle window) 
+        public star(Texture2D texture, Rectangle rect, float orbitRadius, float orbitSpeed, Vector2 centerPosition)
         {
             _texture = texture;
             _rectangle = rect;
-            _speed = speed;
+            _orbitRadius = orbitRadius;
+            _orbitSpeed = orbitSpeed;
+            _centerPosition = centerPosition;
+            _angle = 0;
         }
 
-        public Texture2D Texture
+        public void SetCenterPosition(Vector2 newCenterPosition)
         {
-            get { return _texture; }
+            _centerPosition = newCenterPosition;
         }
+
+        public Texture2D Texture => _texture;
 
         public Rectangle Bounds
         {
-            get { return _rectangle; }
-            set { _rectangle = value; }
+            get => _rectangle;
+            set => _rectangle = value;
         }
 
-        public int Right
-        {
-            get { return _rectangle.Right; }
-        }
+        public int Right => _rectangle.Right;
 
-        public bool Intersects(Rectangle rect)
-        {
-            return _rectangle.Intersects(rect);
-        }
+        public bool Intersects(Rectangle rect) => _rectangle.Intersects(rect);
 
-        public void Move()
+        public void Update(GameTime gameTime)
         {
-            _rectangle.Offset(_speed);
- 
+            _angle += _orbitSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            // Update position based on orbiting motion
+            _rectangle.X = (int)(_centerPosition.X + Math.Cos(_angle) * _orbitRadius);
+            _rectangle.Y = (int)(_centerPosition.Y + Math.Sin(_angle) * _orbitRadius);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_texture, _rectangle, Color.White);
-
-
         }
     }
 }
