@@ -16,10 +16,13 @@ namespace Orbit
         MouseState mouseState, prevMouseState;
         Song music;
         SpriteFont fontText;
-        Texture2D starB, starY, starR, blackHole, bckgrnd;
+        Texture2D starB, starY, starR, blackHole, bckgrnd, button;
         Rectangle window;
 
         star star1, star2, star3, star4;
+        Button button1;
+
+        
 
 
         enum Screen
@@ -39,6 +42,8 @@ namespace Orbit
 
         protected override void Initialize()
         {
+            Random generator = new Random();
+
             screen = Screen.intro;
 
             bckgrnd = Content.Load<Texture2D>("background");
@@ -53,11 +58,13 @@ namespace Orbit
             base.Initialize();
 
 
-            star1 = new star(starB, new Rectangle(0, 0, 29, 29), 80, -4, new Vector2(371, 221));
-            star2 = new star(starR, new Rectangle(0, 0, 29, 29), 80, 3, new Vector2(371, 221));
+            button1 = new Button(button, new Rectangle(1, 1, 100, 50)) ;
 
-            star3 = new star(starY, new Rectangle(0, 0, 29, 29), 120, 2, new Vector2(400, 250));
-            star4 = new star(blackHole, new Rectangle(0, 0, 28, 21), 160, 1, new Vector2(400, 250));
+            star1 = new star(starB, new Rectangle(0, 0, 29, 29), 80, -0.3f, new Vector2(371, 221));
+            star2 = new star(starR, new Rectangle(0, 0, 29, 29), 80, 0.3f, new Vector2(371, 221));
+
+            star3 = new star(starY, new Rectangle(0, 0, 29, 29), 120, -0.2f, new Vector2(400, 250));
+            star4 = new star(blackHole, new Rectangle(0, 0, 28, 21), 120, 0.1f, new Vector2(400, 250));
 
 
 
@@ -72,11 +79,12 @@ namespace Orbit
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             fontText = Content.Load<SpriteFont>("font");
-
+            button = Content.Load<Texture2D>("button");
             starB = Content.Load<Texture2D>("starB");
             starY = Content.Load<Texture2D>("starY");
             starR = Content.Load<Texture2D>("starR");
             blackHole = Content.Load<Texture2D>("blackHole");
+
 
             music = Content.Load<Song>("ascent");
         }
@@ -89,9 +97,13 @@ namespace Orbit
             prevMouseState = mouseState;
             mouseState = Mouse.GetState();
 
+            if (button1.IsClicked(mouseState, prevMouseState))
+            {
+                Exit();
+            }
 
+            button1.Update(mouseState, prevMouseState);
 
-            Random generator = new Random();
 
 
 
@@ -110,13 +122,17 @@ namespace Orbit
 
             if (screen == Screen.intro)
             {
-                //star1.SetCenterPosition(new Vector2(mouseState.X, mouseState.Y));
+                //star1.SetCenterPosition(new Vector2(star2.Bounds.X, star2.Bounds.Y));
                 star2.SetCenterPosition(new Vector2(star1.Bounds.X, star1.Bounds.Y));
+                star3.SetCenterPosition(new Vector2(star2.Bounds.X, star1.Bounds.Y));
+                star4.SetCenterPosition(new Vector2(star3.Bounds.X, star3.Bounds.Y));
 ;
                 star1.Update(gameTime);
 
                 star2.Update(gameTime);
-
+                
+                star3.Update(gameTime);
+                star4.Update(gameTime);
 
             }
 
@@ -143,7 +159,9 @@ namespace Orbit
             {
                 star1.Draw(_spriteBatch);
                 star2.Draw(_spriteBatch);
-
+                star3.Draw(_spriteBatch);
+                star4.Draw(_spriteBatch);
+                button1.Draw(_spriteBatch);
             }
             
 
