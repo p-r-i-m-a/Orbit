@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Orbit.Content
+namespace Orbit
 {
     internal class star
     {
@@ -16,6 +16,7 @@ namespace Orbit.Content
         private float _orbitSpeed;
         private float _angle;
         private Vector2 _centerPosition;
+
 
         public star(Texture2D texture, Rectangle rect, float orbitRadius, float orbitSpeed, Vector2 centerPosition)
         {

@@ -10,7 +10,7 @@ public class Button
     private Rectangle _rectangle;
     private Color _color;
     private bool _isClicked;
-    
+
 
     public Button(Texture2D texture, Rectangle rectangle)
     {
@@ -19,6 +19,8 @@ public class Button
         _color = Color.White;
         _isClicked = false;
     }
+
+
 
     public Rectangle Bounds { get { return _rectangle; } }
 
@@ -31,7 +33,7 @@ public class Button
     {
         if (_rectangle.Contains(mouseState.Position))
         {
-            _color = Color.Green;  
+            _color = Color.Red;  
         }
         else
             _color = Color.White;
