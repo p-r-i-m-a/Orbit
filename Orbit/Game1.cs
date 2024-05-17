@@ -16,13 +16,16 @@ namespace Orbit
         MouseState mouseState, prevMouseState;
         Song music;
         SpriteFont menuFont, returnFont, exitFont, modFont;
-        Texture2D starB, starY, starR, blackHole, bckgrnd, button;
+        Texture2D starB, starY, starR, blackHole, bckgrnd, button, menuStar1, menuStar2, menuStar3, menuStar4;
         Rectangle window;
 
         star star1, star2, star3, star4;
         Button buttonMenu, buttonExit, buttonStarMod, buttonReturn, star1SpeedUp, star1SpeedDown, star1DistanceUp, star1DistanceDown, star2SpeedUp, star2SpeedDown, star2DistanceUp, star2DistanceDown, star3SpeedUp, star3SpeedDown, star3DistanceUp, star3DistanceDown, star4SpeedUp, star4SpeedDown, star4DistanceUp, star4DistanceDown;
 
-        
+        Rectangle star1Tangle = new Rectangle(250, 79, 29, 29);
+        Rectangle star2Tangle = new Rectangle(329, 79, 29, 29);
+        Rectangle star3Tangle = new Rectangle(408, 79, 29, 29);
+        Rectangle star4Tangle = new Rectangle(487, 79, 29, 29);
 
 
         enum Screen
@@ -56,27 +59,28 @@ namespace Orbit
 
 
 
+
             base.Initialize();
 
-            star1SpeedUp = new Button(button, new Rectangle(1, 1, 50, 25));
-            star1SpeedDown = new Button(button, new Rectangle(1, 1, 50, 25));
-            star1DistanceUp = new Button(button, new Rectangle(1, 1, 50, 25));
-            star1DistanceDown = new Button(button, new Rectangle(1, 1, 50, 25));
+            star1SpeedUp = new Button(button, new Rectangle(250, 125, 50, 25));
+            star1SpeedDown = new Button(button, new Rectangle(250, 200, 50, 25));
+            star1DistanceUp = new Button(button, new Rectangle(250, 275, 50, 25));
+            star1DistanceDown = new Button(button, new Rectangle(250, 350, 50, 25));
 
-            star2SpeedUp = new Button(button, new Rectangle(1, 1, 50, 25));
-            star2SpeedDown = new Button(button, new Rectangle(1, 1, 50, 25));
-            star2DistanceUp = new Button(button, new Rectangle(1, 1, 50, 25));
-            star2DistanceDown = new Button(button, new Rectangle(1, 1, 50, 25));
+            star2SpeedUp = new Button(button, new Rectangle(325, 125, 50, 25));
+            star2SpeedDown = new Button(button, new Rectangle(325, 200, 50, 25));
+            star2DistanceUp = new Button(button, new Rectangle(325, 275, 50, 25));
+            star2DistanceDown = new Button(button, new Rectangle(325, 350, 50, 25));
 
-            star3SpeedUp = new Button(button, new Rectangle(1, 1, 50, 25));
-            star3SpeedDown = new Button(button, new Rectangle(1, 1, 50, 25));
-            star3DistanceUp = new Button(button, new Rectangle(1, 1, 50, 25));
-            star3DistanceDown = new Button(button, new Rectangle(1, 1, 50, 25));
+            star3SpeedUp = new Button(button, new Rectangle(400, 125, 50, 25));
+            star3SpeedDown = new Button(button, new Rectangle(400, 200, 50, 25));
+            star3DistanceUp = new Button(button, new Rectangle(400, 275, 50, 25));
+            star3DistanceDown = new Button(button, new Rectangle(400, 350, 50, 25));
 
-            star4SpeedUp = new Button(button, new Rectangle(1, 1, 50, 25));
-            star4SpeedDown = new Button(button, new Rectangle(1, 1, 50, 25));
-            star4DistanceUp = new Button(button, new Rectangle(1, 1, 50, 25));
-            star4DistanceDown = new Button(button, new Rectangle(1, 1, 50, 25));
+            star4SpeedUp = new Button(button, new Rectangle(475, 125, 50, 25));
+            star4SpeedDown = new Button(button, new Rectangle(475, 200, 50, 25));
+            star4DistanceUp = new Button(button, new Rectangle(475, 275, 50, 25));
+            star4DistanceDown = new Button(button, new Rectangle(475, 350, 50, 25));
 
             buttonMenu = new Button(button, new Rectangle(1, 1, 50, 25));
 
@@ -109,6 +113,10 @@ namespace Orbit
             modFont = Content.Load<SpriteFont>("font");
             returnFont = Content.Load<SpriteFont>("font");
 
+            menuStar1 = Content.Load<Texture2D>("starB");
+            menuStar2 = Content.Load<Texture2D>("starY");
+            menuStar3 = Content.Load<Texture2D>("starR");
+            menuStar4 = Content.Load<Texture2D>("blackHole");
 
 
 
@@ -154,11 +162,6 @@ namespace Orbit
 
 
 
-
-
-
-
-
             if (screen == Screen.intro)
             {
                 //star1.SetCenterPosition(new Vector2(star2.Bounds.X, star2.Bounds.Y));
@@ -189,7 +192,30 @@ namespace Orbit
             }
             else if (screen == Screen.modify)
             {
+                star1SpeedUp.Update(mouseState, prevMouseState);
+                star1SpeedDown.Update(mouseState, prevMouseState);
+                star1DistanceUp.Update(mouseState, prevMouseState);
+                star1DistanceDown.Update(mouseState, prevMouseState);
 
+                star2SpeedUp.Update(mouseState, prevMouseState);
+                star2SpeedDown.Update(mouseState, prevMouseState);
+                star2DistanceUp.Update(mouseState, prevMouseState);
+                star2DistanceDown.Update(mouseState, prevMouseState);
+
+                star3SpeedUp.Update(mouseState, prevMouseState);
+                star3SpeedDown.Update(mouseState, prevMouseState);
+                star3DistanceUp.Update(mouseState, prevMouseState);
+                star3DistanceDown.Update(mouseState, prevMouseState);
+
+                star4SpeedUp.Update(mouseState, prevMouseState);
+                star4SpeedDown.Update(mouseState, prevMouseState);
+                star4DistanceUp.Update(mouseState, prevMouseState);
+                star4DistanceDown.Update(mouseState, prevMouseState);
+
+                if (star1SpeedUp.IsClicked(mouseState, prevMouseState))
+                {
+                    Exit();
+                }
             }
 
 
@@ -236,6 +262,32 @@ namespace Orbit
             {
                 _spriteBatch.Draw(bckgrnd, new Rectangle(0, 0, 800, 500), Color.White);
 
+                star1DistanceUp.Draw(_spriteBatch);
+                star1DistanceDown.Draw(_spriteBatch);
+                star1SpeedUp.Draw(_spriteBatch);
+                star1SpeedDown.Draw(_spriteBatch);
+
+                star2DistanceUp.Draw(_spriteBatch);
+                star2DistanceDown.Draw(_spriteBatch);
+                star2SpeedUp.Draw(_spriteBatch);
+                star2SpeedDown.Draw(_spriteBatch);
+
+                star3DistanceUp.Draw(_spriteBatch);
+                star3DistanceDown.Draw(_spriteBatch);
+                star3SpeedUp.Draw(_spriteBatch);
+                star3SpeedDown.Draw(_spriteBatch);
+
+                star4DistanceUp.Draw(_spriteBatch);
+                star4DistanceDown.Draw(_spriteBatch);
+                star4SpeedUp.Draw(_spriteBatch);
+                star4SpeedDown.Draw(_spriteBatch);
+
+
+
+                _spriteBatch.Draw(menuStar1, star1Tangle, Color.White);
+                _spriteBatch.Draw(menuStar2, star2Tangle, Color.White);
+                _spriteBatch.Draw(menuStar3, star3Tangle, Color.White);
+                _spriteBatch.Draw(menuStar4, star4Tangle, Color.White);
             }
 
 
