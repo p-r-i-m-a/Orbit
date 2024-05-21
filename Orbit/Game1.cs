@@ -138,12 +138,8 @@ namespace Orbit
             prevMouseState = mouseState;
             mouseState = Mouse.GetState();
 
-            if (buttonMenu.IsClicked(mouseState, prevMouseState))
-            {
-                screen = Screen.menu; 
-            }
 
-            buttonMenu.Update(mouseState, prevMouseState);
+
             buttonExit.Update(mouseState, prevMouseState);
             buttonStarMod.Update(mouseState, prevMouseState);
             buttonReturn.Update(mouseState, prevMouseState);
@@ -165,6 +161,14 @@ namespace Orbit
             if (screen == Screen.intro)
             {
                 //star1.SetCenterPosition(new Vector2(star2.Bounds.X, star2.Bounds.Y));
+
+                buttonMenu.Update(mouseState, prevMouseState);
+
+                if (buttonMenu.IsClicked(mouseState, prevMouseState))
+                {
+                    screen = Screen.menu;
+                }
+
 ;
                 star1.Update(gameTime);
 
@@ -177,6 +181,11 @@ namespace Orbit
             }
             else if (screen == Screen.menu)
             {
+
+
+                buttonReturn = new Button(button, new Rectangle(350, 100, 50, 25));
+
+
                 if (buttonExit.IsClicked(mouseState, prevMouseState))
                 {
                     Exit();
@@ -192,6 +201,7 @@ namespace Orbit
             }
             else if (screen == Screen.modify)
             {
+
                 star1SpeedUp.Update(mouseState, prevMouseState);
                 star1SpeedDown.Update(mouseState, prevMouseState);
                 star1DistanceUp.Update(mouseState, prevMouseState);
@@ -212,10 +222,93 @@ namespace Orbit
                 star4DistanceUp.Update(mouseState, prevMouseState);
                 star4DistanceDown.Update(mouseState, prevMouseState);
 
+
+                buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
+
+                if (buttonReturn.IsClicked(mouseState, prevMouseState))
+                {
+                    screen = Screen.intro;
+                }
+
+                //Speed:
+
+
                 if (star1SpeedUp.IsClicked(mouseState, prevMouseState))
                 {
-                    Exit();
+                    star1._orbitSpeed = (star1._orbitSpeed + 1);
                 }
+                else if (star1SpeedDown.IsClicked(mouseState, prevMouseState))
+                {
+                    star1._orbitSpeed = (star1._orbitSpeed - 1);
+                }
+
+                if (star2SpeedUp.IsClicked(mouseState, prevMouseState))
+                {
+                    star2._orbitSpeed = (star2._orbitSpeed + 1);
+                }
+                else if (star2SpeedDown.IsClicked(mouseState, prevMouseState))
+                {
+                    star2._orbitSpeed = (star2._orbitSpeed - 1);
+                }
+
+                if (star3SpeedUp.IsClicked(mouseState, prevMouseState))
+                {
+                    star3._orbitSpeed = (star3._orbitSpeed + 1);
+                }
+                else if (star3SpeedDown.IsClicked(mouseState, prevMouseState))
+                {
+                    star3._orbitSpeed = (star3._orbitSpeed - 1);
+                }
+
+                if (star4SpeedUp.IsClicked(mouseState, prevMouseState))
+                {
+                    star4._orbitSpeed = (star4._orbitSpeed + 1);
+                }
+                else if (star4SpeedDown.IsClicked(mouseState, prevMouseState))
+                {
+                    star4._orbitSpeed = (star4._orbitSpeed - 1);
+                }
+
+                //Distance:
+
+
+                if (star1DistanceUp.IsClicked(mouseState, prevMouseState))
+                {
+                    star1._orbitSpeed = (star1._orbitRadius + 0.1f);
+                }
+                else if (star1DistanceDown.IsClicked(mouseState, prevMouseState))
+                {
+                    star1._orbitSpeed = (star1._orbitRadius - 0.1f);
+                }
+
+                if (star2DistanceUp.IsClicked(mouseState, prevMouseState))
+                {
+                    star2._orbitSpeed = (star2._orbitRadius + 0.1f);
+                }
+                else if (star1DistanceDown.IsClicked(mouseState, prevMouseState))
+                {
+                    star2._orbitSpeed = (star2._orbitRadius - 0.1f);
+                }
+
+                if (star3DistanceUp.IsClicked(mouseState, prevMouseState))
+                {
+                    star3._orbitSpeed = (star3._orbitRadius + 0.1f);
+                }
+                else if (star3DistanceDown.IsClicked(mouseState, prevMouseState))
+                {
+                    star3._orbitSpeed = (star3._orbitRadius - 0.1f);
+                }
+
+                if (star4DistanceUp.IsClicked(mouseState, prevMouseState))
+                {
+                    star4._orbitSpeed = (star4._orbitRadius + 0.1f);
+                }
+                else if (star1DistanceDown.IsClicked(mouseState, prevMouseState))
+                {
+                    star4._orbitSpeed = (star4._orbitRadius - 0.1f);
+                }
+
+
             }
 
 
@@ -250,6 +343,7 @@ namespace Orbit
             else if (screen == Screen.menu)
             {
                 _spriteBatch.Draw(bckgrnd, new Rectangle(0, 0, 800, 500), Color.White);
+                buttonReturn.Draw(_spriteBatch);
                 buttonStarMod.Draw(_spriteBatch);
                 buttonReturn.Draw(_spriteBatch);
                 buttonExit.Draw(_spriteBatch);
@@ -260,7 +354,14 @@ namespace Orbit
             }
             else if (screen == Screen.modify)
             {
+
+
+
+
                 _spriteBatch.Draw(bckgrnd, new Rectangle(0, 0, 800, 500), Color.White);
+
+                buttonReturn.Draw(_spriteBatch);
+
 
                 star1DistanceUp.Draw(_spriteBatch);
                 star1DistanceDown.Draw(_spriteBatch);

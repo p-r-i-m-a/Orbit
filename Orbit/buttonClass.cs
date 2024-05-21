@@ -11,7 +11,6 @@ public class Button
     private Color _color;
     private bool _isClicked;
 
-
     public Button(Texture2D texture, Rectangle rectangle)
     {
         _texture = texture;
@@ -19,7 +18,6 @@ public class Button
         _color = Color.White;
         _isClicked = false;
     }
-
 
 
     public Rectangle Bounds { get { return _rectangle; } }

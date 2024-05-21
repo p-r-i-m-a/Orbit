@@ -12,8 +12,8 @@ namespace Orbit
     {
         private Texture2D _texture;
         private Rectangle _rectangle;
-        private float _orbitRadius;
-        private float _orbitSpeed;
+        public float _orbitRadius;
+        public float _orbitSpeed;
         private float _angle;
         private Vector2 _centerPosition;
 
@@ -31,6 +31,11 @@ namespace Orbit
         public void SetCenterPosition(Vector2 newCenterPosition)
         {
             _centerPosition = newCenterPosition;
+        }
+
+        public void SetOrbitSpeed(float newOrbitSpeed)
+        {
+            _orbitSpeed = newOrbitSpeed;
         }
 
         public Texture2D Texture => _texture;
