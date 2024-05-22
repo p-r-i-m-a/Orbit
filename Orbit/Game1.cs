@@ -15,7 +15,7 @@ namespace Orbit
         private SpriteBatch _spriteBatch;
         MouseState mouseState, prevMouseState;
         Song music;
-        SpriteFont menuFont, returnFont, exitFont, modFont;
+        SpriteFont menuFont, returnFont, exitFont, modFont, distanceFont, speedFont, distanceFontd, speedFontd;
         Texture2D starB, starY, starR, blackHole, bckgrnd, button, menuStar1, menuStar2, menuStar3, menuStar4;
         Rectangle window;
 
@@ -23,8 +23,8 @@ namespace Orbit
         Button buttonMenu, buttonExit, buttonStarMod, buttonReturn, star1SpeedUp, star1SpeedDown, star1DistanceUp, star1DistanceDown, star2SpeedUp, star2SpeedDown, star2DistanceUp, star2DistanceDown, star3SpeedUp, star3SpeedDown, star3DistanceUp, star3DistanceDown, star4SpeedUp, star4SpeedDown, star4DistanceUp, star4DistanceDown;
 
         Rectangle star1Tangle = new Rectangle(250, 79, 29, 29);
-        Rectangle star2Tangle = new Rectangle(329, 79, 29, 29);
-        Rectangle star3Tangle = new Rectangle(408, 79, 29, 29);
+        Rectangle star2Tangle = new Rectangle(408, 79, 29, 29);
+        Rectangle star3Tangle = new Rectangle(329, 79, 29, 29);
         Rectangle star4Tangle = new Rectangle(487, 79, 29, 29);
 
 
@@ -112,6 +112,11 @@ namespace Orbit
             exitFont = Content.Load<SpriteFont>("font");
             modFont = Content.Load<SpriteFont>("font");
             returnFont = Content.Load<SpriteFont>("font");
+            distanceFont = Content.Load<SpriteFont>("font");
+            distanceFontd = Content.Load<SpriteFont>("font");
+            speedFont = Content.Load<SpriteFont>("font");
+            speedFontd = Content.Load<SpriteFont>("font");
+
 
             menuStar1 = Content.Load<Texture2D>("starB");
             menuStar2 = Content.Load<Texture2D>("starY");
@@ -274,38 +279,38 @@ namespace Orbit
 
                 if (star1DistanceUp.IsClicked(mouseState, prevMouseState))
                 {
-                    star1._orbitSpeed = (star1._orbitRadius + 0.1f);
+                    star1._orbitRadius = (star1._orbitRadius + 20);
                 }
                 else if (star1DistanceDown.IsClicked(mouseState, prevMouseState))
                 {
-                    star1._orbitSpeed = (star1._orbitRadius - 0.1f);
+                    star1._orbitRadius = (star1._orbitRadius - 20);
                 }
 
                 if (star2DistanceUp.IsClicked(mouseState, prevMouseState))
                 {
-                    star2._orbitSpeed = (star2._orbitRadius + 0.1f);
+                    star2._orbitRadius = (star2._orbitRadius + 20);
                 }
-                else if (star1DistanceDown.IsClicked(mouseState, prevMouseState))
+                else if (star2DistanceDown.IsClicked(mouseState, prevMouseState))
                 {
-                    star2._orbitSpeed = (star2._orbitRadius - 0.1f);
+                    star2._orbitRadius = (star2._orbitRadius - 20);
                 }
 
                 if (star3DistanceUp.IsClicked(mouseState, prevMouseState))
                 {
-                    star3._orbitSpeed = (star3._orbitRadius + 0.1f);
+                    star3._orbitRadius = (star3._orbitRadius + 20);
                 }
                 else if (star3DistanceDown.IsClicked(mouseState, prevMouseState))
                 {
-                    star3._orbitSpeed = (star3._orbitRadius - 0.1f);
+                    star3._orbitRadius = (star3._orbitRadius - 20);
                 }
 
                 if (star4DistanceUp.IsClicked(mouseState, prevMouseState))
                 {
-                    star4._orbitSpeed = (star4._orbitRadius + 0.1f);
+                    star4._orbitRadius = (star4._orbitRadius + 20);
                 }
                 else if (star1DistanceDown.IsClicked(mouseState, prevMouseState))
                 {
-                    star4._orbitSpeed = (star4._orbitRadius - 0.1f);
+                    star4._orbitRadius = (star4._orbitRadius - 20);
                 }
 
 
@@ -361,6 +366,7 @@ namespace Orbit
                 _spriteBatch.Draw(bckgrnd, new Rectangle(0, 0, 800, 500), Color.White);
 
                 buttonReturn.Draw(_spriteBatch);
+                _spriteBatch.DrawString(returnFont, "Return", new Vector2(buttonReturn.Bounds.X, buttonReturn.Bounds.Y), Color.Black);
 
 
                 star1DistanceUp.Draw(_spriteBatch);
@@ -383,7 +389,10 @@ namespace Orbit
                 star4SpeedUp.Draw(_spriteBatch);
                 star4SpeedDown.Draw(_spriteBatch);
 
-
+                _spriteBatch.DrawString(distanceFont, "Distance Up:", new Vector2(star1DistanceUp.Bounds.X - 150, star1DistanceUp.Bounds.Y), Color.White);
+                _spriteBatch.DrawString(distanceFontd, "Distance Down:", new Vector2(star1DistanceDown.Bounds.X - 150, star1DistanceDown.Bounds.Y), Color.White);
+                _spriteBatch.DrawString(speedFont, "Speed Up:", new Vector2(star1SpeedUp.Bounds.X - 150, star1SpeedUp.Bounds.Y), Color.White);
+                _spriteBatch.DrawString(speedFontd, "Speed Down:", new Vector2(star1SpeedDown.Bounds.X - 150, star1SpeedDown.Bounds.Y), Color.White);
 
                 _spriteBatch.Draw(menuStar1, star1Tangle, Color.White);
                 _spriteBatch.Draw(menuStar2, star2Tangle, Color.White);
