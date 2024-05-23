@@ -19,13 +19,18 @@ namespace Orbit
         Texture2D starB, starY, starR, blackHole, bckgrnd, button, menuStar1, menuStar2, menuStar3, menuStar4;
         Rectangle window;
 
+        Rectangle blackHoleSource;
+        int blackHoleFrame;
+        float seconds;
+        
+
         star star1, star2, star3, star4;
         Button buttonMenu, buttonExit, buttonStarMod, buttonReturn, star1SpeedUp, star1SpeedDown, star1DistanceUp, star1DistanceDown, star2SpeedUp, star2SpeedDown, star2DistanceUp, star2DistanceDown, star3SpeedUp, star3SpeedDown, star3DistanceUp, star3DistanceDown, star4SpeedUp, star4SpeedDown, star4DistanceUp, star4DistanceDown;
 
         Rectangle star1Tangle = new Rectangle(250, 79, 29, 29);
         Rectangle star2Tangle = new Rectangle(408, 79, 29, 29);
         Rectangle star3Tangle = new Rectangle(329, 79, 29, 29);
-        Rectangle star4Tangle = new Rectangle(487, 79, 29, 29);
+        Rectangle star4Tangle = new Rectangle(470, 58, 58, 58);
 
 
         enum Screen
@@ -52,11 +57,16 @@ namespace Orbit
 
             bckgrnd = Content.Load<Texture2D>("background");
 
-            window = new Rectangle(0, 0, 800, 500);
+            blackHoleFrame = 0;
+            seconds = 0;
+
+
+            window = new Rectangle(0, 0, 1000, 700);
             _graphics.PreferredBackBufferWidth = window.Width;
             _graphics.PreferredBackBufferHeight = window.Height;
             _graphics.ApplyChanges();
 
+            blackHoleSource = new Rectangle(0, 0, 135, 120);
 
 
 
@@ -94,7 +104,7 @@ namespace Orbit
             star2 = new star(starR, new Rectangle(0, 0, 29, 29), 80, 0.3f, new Vector2(371, 221));
 
             star3 = new star(starY, new Rectangle(0, 0, 29, 29), 120, 0.2f, new Vector2(371, 221));
-            star4 = new star(blackHole, new Rectangle(0, 0, 28, 21), 160, 0.1f, new Vector2(371, 221));
+            star4 = new star(blackHole, new Rectangle(0, 0, 120, 120), 160, 0.1f, new Vector2(371, 221));
 
 
 
@@ -165,6 +175,17 @@ namespace Orbit
 
             if (screen == Screen.intro)
             {
+
+                seconds += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (seconds > 0.1)
+                {
+                    seconds = 0;
+                    blackHoleFrame += 1;
+                    if(blackHoleFrame > 5)
+                        blackHoleFrame = 0;
+                    blackHoleSource.X = blackHoleFrame * 135;
+                }
+
                 //star1.SetCenterPosition(new Vector2(star2.Bounds.X, star2.Bounds.Y));
 
                 buttonMenu.Update(mouseState, prevMouseState);
@@ -206,6 +227,14 @@ namespace Orbit
             }
             else if (screen == Screen.modify)
             {
+                if (seconds > 0.1)
+                {
+                    seconds = 0;
+                    blackHoleFrame += 1;
+                    if (blackHoleFrame > 5)
+                        blackHoleFrame = 0;
+                    blackHoleSource.X = blackHoleFrame * 135;
+                }
 
                 star1SpeedUp.Update(mouseState, prevMouseState);
                 star1SpeedDown.Update(mouseState, prevMouseState);
@@ -240,38 +269,38 @@ namespace Orbit
 
                 if (star1SpeedUp.IsClicked(mouseState, prevMouseState))
                 {
-                    star1._orbitSpeed = (star1._orbitSpeed + 1);
+                    star1._orbitSpeed = (star1._orbitSpeed + 0.1f);
                 }
                 else if (star1SpeedDown.IsClicked(mouseState, prevMouseState))
                 {
-                    star1._orbitSpeed = (star1._orbitSpeed - 1);
+                    star1._orbitSpeed = (star1._orbitSpeed - 0.1f);
                 }
 
                 if (star2SpeedUp.IsClicked(mouseState, prevMouseState))
                 {
-                    star2._orbitSpeed = (star2._orbitSpeed + 1);
+                    star2._orbitSpeed = (star2._orbitSpeed + 0.1f);
                 }
                 else if (star2SpeedDown.IsClicked(mouseState, prevMouseState))
                 {
-                    star2._orbitSpeed = (star2._orbitSpeed - 1);
+                    star2._orbitSpeed = (star2._orbitSpeed - 0.1f);
                 }
 
                 if (star3SpeedUp.IsClicked(mouseState, prevMouseState))
                 {
-                    star3._orbitSpeed = (star3._orbitSpeed + 1);
+                    star3._orbitSpeed = (star3._orbitSpeed + 0.1f);
                 }
                 else if (star3SpeedDown.IsClicked(mouseState, prevMouseState))
                 {
-                    star3._orbitSpeed = (star3._orbitSpeed - 1);
+                    star3._orbitSpeed = (star3._orbitSpeed - 0.1f);
                 }
 
                 if (star4SpeedUp.IsClicked(mouseState, prevMouseState))
                 {
-                    star4._orbitSpeed = (star4._orbitSpeed + 1);
+                    star4._orbitSpeed = (star4._orbitSpeed + 0.1f);
                 }
                 else if (star4SpeedDown.IsClicked(mouseState, prevMouseState))
                 {
-                    star4._orbitSpeed = (star4._orbitSpeed - 1);
+                    star4._orbitSpeed = (star4._orbitSpeed - 0.1f);
                 }
 
                 //Distance:
@@ -334,20 +363,22 @@ namespace Orbit
 
             _spriteBatch.Begin();
 
-            _spriteBatch.Draw(bckgrnd, new Rectangle(0, 0, 800, 500), Color.White);
+            _spriteBatch.Draw(bckgrnd, new Rectangle(0, 0, 1000, 700), Color.White);
 
             if(screen == Screen.intro)
             {
                 star1.Draw(_spriteBatch);
                 star2.Draw(_spriteBatch);
                 star3.Draw(_spriteBatch);
-                star4.Draw(_spriteBatch);
+                //star4.Draw(_spriteBatch);
+                _spriteBatch.Draw(star4.Texture, star4.Bounds, blackHoleSource, Color.White);
+                
                 buttonMenu.Draw(_spriteBatch);
                 _spriteBatch.DrawString(menuFont, "Menu", new Vector2(buttonMenu.Bounds.X, buttonMenu.Bounds.Y), Color.Black);
             }
             else if (screen == Screen.menu)
             {
-                _spriteBatch.Draw(bckgrnd, new Rectangle(0, 0, 800, 500), Color.White);
+                _spriteBatch.Draw(bckgrnd, new Rectangle(0, 0, 1000, 700), Color.White);
                 buttonReturn.Draw(_spriteBatch);
                 buttonStarMod.Draw(_spriteBatch);
                 buttonReturn.Draw(_spriteBatch);
@@ -363,7 +394,7 @@ namespace Orbit
 
 
 
-                _spriteBatch.Draw(bckgrnd, new Rectangle(0, 0, 800, 500), Color.White);
+                _spriteBatch.Draw(bckgrnd, new Rectangle(0, 0, 1000, 700), Color.White);
 
                 buttonReturn.Draw(_spriteBatch);
                 _spriteBatch.DrawString(returnFont, "Return", new Vector2(buttonReturn.Bounds.X, buttonReturn.Bounds.Y), Color.Black);
@@ -384,6 +415,8 @@ namespace Orbit
                 star3SpeedUp.Draw(_spriteBatch);
                 star3SpeedDown.Draw(_spriteBatch);
 
+                
+
                 star4DistanceUp.Draw(_spriteBatch);
                 star4DistanceDown.Draw(_spriteBatch);
                 star4SpeedUp.Draw(_spriteBatch);
@@ -397,7 +430,9 @@ namespace Orbit
                 _spriteBatch.Draw(menuStar1, star1Tangle, Color.White);
                 _spriteBatch.Draw(menuStar2, star2Tangle, Color.White);
                 _spriteBatch.Draw(menuStar3, star3Tangle, Color.White);
-                _spriteBatch.Draw(menuStar4, star4Tangle, Color.White);
+               // _spriteBatch.Draw(menuStar4, star4Tangle, Color.White);
+                _spriteBatch.Draw(star4.Texture, star4Tangle, blackHoleSource, Color.White);
+
             }
 
 
