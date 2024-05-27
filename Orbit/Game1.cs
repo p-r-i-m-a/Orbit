@@ -18,6 +18,7 @@ namespace Orbit
         SpriteFont menuFont, returnFont, exitFont, modFont, distanceFont, speedFont, distanceFontd, speedFontd;
         Texture2D starB, starY, starR, blackHole, bckgrnd, button, menuStar1, menuStar2, menuStar3, menuStar4;
         Rectangle window;
+        Vector2 star1orbit, star2orbit, star3orbit, star4orbit;
 
         Rectangle blackHoleSource;
         int blackHoleFrame;
@@ -25,7 +26,7 @@ namespace Orbit
         
 
         star star1, star2, star3, star4;
-        Button buttonMenu, buttonExit, buttonStarMod, buttonReturn, star1SpeedUp, star1SpeedDown, star1DistanceUp, star1DistanceDown, star2SpeedUp, star2SpeedDown, star2DistanceUp, star2DistanceDown, star3SpeedUp, star3SpeedDown, star3DistanceUp, star3DistanceDown, star4SpeedUp, star4SpeedDown, star4DistanceUp, star4DistanceDown;
+        Button buttonMenu, buttonExit, buttonStarMod, buttonReturn, star1SpeedUp, star1SpeedDown, star1DistanceUp, star1DistanceDown, star2SpeedUp, star2SpeedDown, star2DistanceUp, star2DistanceDown, star3SpeedUp, star3SpeedDown, star3DistanceUp, star3DistanceDown, star4SpeedUp, star4SpeedDown, star4DistanceUp, star4DistanceDown, star1orbitB, star2orbitB, star3orbitB, star4orbitB;
 
         Rectangle star1Tangle = new Rectangle(250, 79, 29, 29);
         Rectangle star2Tangle = new Rectangle(408, 79, 29, 29);
@@ -37,7 +38,8 @@ namespace Orbit
         {
             intro,
             menu,
-            modify
+            modify,
+            orbitSelect
         }
 
         Screen screen;
@@ -91,6 +93,12 @@ namespace Orbit
             star4SpeedDown = new Button(button, new Rectangle(475, 200, 50, 25));
             star4DistanceUp = new Button(button, new Rectangle(475, 275, 50, 25));
             star4DistanceDown = new Button(button, new Rectangle(475, 350, 50, 25));
+
+            star1orbitB = new Button(button, new Rectangle());
+            star2orbitB = new Button(button, new Rectangle());
+            star3orbitB = new Button(button, new Rectangle());
+            star4orbitB = new Button(button, new Rectangle());
+
 
             buttonMenu = new Button(button, new Rectangle(1, 1, 50, 25));
 
