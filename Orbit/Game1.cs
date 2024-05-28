@@ -39,7 +39,10 @@ namespace Orbit
             intro,
             menu,
             modify,
-            orbitSelect
+            orbitSelect1,
+            orbitSelect2,
+            orbitSelect3,
+            orbitSelect4
         }
 
         Screen screen;
@@ -94,10 +97,10 @@ namespace Orbit
             star4DistanceUp = new Button(button, new Rectangle(475, 275, 50, 25));
             star4DistanceDown = new Button(button, new Rectangle(475, 350, 50, 25));
 
-            star1orbitB = new Button(button, new Rectangle());
-            star2orbitB = new Button(button, new Rectangle());
-            star3orbitB = new Button(button, new Rectangle());
-            star4orbitB = new Button(button, new Rectangle());
+            star1orbitB = new Button(button, new Rectangle(250, 425, 50, 25));
+            star2orbitB = new Button(button, new Rectangle(325, 425, 50, 25));
+            star3orbitB = new Button(button, new Rectangle(400, 425, 50, 25));
+            star4orbitB = new Button(button, new Rectangle(475, 425, 50, 25));
 
 
             buttonMenu = new Button(button, new Rectangle(1, 1, 50, 25));
@@ -194,7 +197,6 @@ namespace Orbit
                     blackHoleSource.X = blackHoleFrame * 135;
                 }
 
-                //star1.SetCenterPosition(new Vector2(star2.Bounds.X, star2.Bounds.Y));
 
                 buttonMenu.Update(mouseState, prevMouseState);
 
@@ -264,6 +266,10 @@ namespace Orbit
                 star4DistanceUp.Update(mouseState, prevMouseState);
                 star4DistanceDown.Update(mouseState, prevMouseState);
 
+                star1orbitB.Update(mouseState, prevMouseState);
+                star2orbitB.Update(mouseState, prevMouseState);
+                star3orbitB.Update(mouseState, prevMouseState);
+                star4orbitB.Update(mouseState, prevMouseState);
 
                 buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
 
@@ -271,6 +277,26 @@ namespace Orbit
                 {
                     screen = Screen.intro;
                 }
+
+                //orbit cord
+
+                if (star1orbitB.IsClicked(mouseState, prevMouseState))
+                {
+                    screen = Screen.orbitSelect1;  
+                }
+                else if (star2orbitB.IsClicked(mouseState, prevMouseState))
+                {
+                    screen = Screen.orbitSelect2;
+                }
+                else if (star3orbitB.IsClicked(mouseState, prevMouseState))
+                {
+                    screen = Screen.orbitSelect3;
+                }
+                else if (star4orbitB.IsClicked(mouseState, prevMouseState))
+                {
+                    screen = Screen.orbitSelect4;
+                }
+
 
                 //Speed:
 
@@ -352,13 +378,107 @@ namespace Orbit
 
 
             }
-
-
-
-            if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
+            else if (screen == Screen.orbitSelect1)
             {
+                buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
+
+                star1.Update(gameTime);
+
+                star2.Update(gameTime);
+
+                star3.Update(gameTime);
+
+                star4.Update(gameTime);
+
+                if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
+                {
+                    star1.SetCenterPosition(new Vector2(mouseState.X, mouseState.Y));
+
+                }
+
+                if (buttonReturn.IsClicked(mouseState, prevMouseState))
+                {
+                    screen = Screen.modify;
+                }
+
 
             }
+            else if (screen == Screen.orbitSelect2)
+            {
+                buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
+
+                star1.Update(gameTime);
+
+                star2.Update(gameTime);
+
+                star3.Update(gameTime);
+
+                star4.Update(gameTime);
+
+                if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
+                {
+                    star2.SetCenterPosition(new Vector2(mouseState.X, mouseState.Y));
+
+                }
+
+                if (buttonReturn.IsClicked(mouseState, prevMouseState))
+                {
+                    screen = Screen.modify;
+                }
+
+
+            }
+            else if (screen == Screen.orbitSelect3)
+            {
+                buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
+
+                star1.Update(gameTime);
+
+                star2.Update(gameTime);
+
+                star3.Update(gameTime);
+
+                star4.Update(gameTime);
+
+                if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
+                {
+                    star3.SetCenterPosition(new Vector2(mouseState.X, mouseState.Y));
+
+                }
+
+                if (buttonReturn.IsClicked(mouseState, prevMouseState))
+                {
+                    screen = Screen.modify;
+                }
+
+
+            }
+            else if (screen == Screen.orbitSelect4)
+            {
+                buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
+
+                star1.Update(gameTime);
+
+                star2.Update(gameTime);
+
+                star3.Update(gameTime);
+
+                star4.Update(gameTime);
+
+                if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
+                {
+                    star4.SetCenterPosition(new Vector2(mouseState.X, mouseState.Y));
+
+                }
+
+                if (buttonReturn.IsClicked(mouseState, prevMouseState))
+                {
+                    screen = Screen.modify;
+                }
+
+
+            }
+
 
 
 
@@ -430,6 +550,12 @@ namespace Orbit
                 star4SpeedUp.Draw(_spriteBatch);
                 star4SpeedDown.Draw(_spriteBatch);
 
+                star1orbitB.Draw(_spriteBatch);
+                star2orbitB.Draw(_spriteBatch);
+                star3orbitB.Draw(_spriteBatch);
+                star4orbitB.Draw(_spriteBatch);
+
+
                 _spriteBatch.DrawString(distanceFont, "Distance Up:", new Vector2(star1DistanceUp.Bounds.X - 150, star1DistanceUp.Bounds.Y), Color.White);
                 _spriteBatch.DrawString(distanceFontd, "Distance Down:", new Vector2(star1DistanceDown.Bounds.X - 150, star1DistanceDown.Bounds.Y), Color.White);
                 _spriteBatch.DrawString(speedFont, "Speed Up:", new Vector2(star1SpeedUp.Bounds.X - 150, star1SpeedUp.Bounds.Y), Color.White);
@@ -440,6 +566,21 @@ namespace Orbit
                 _spriteBatch.Draw(menuStar3, star3Tangle, Color.White);
                // _spriteBatch.Draw(menuStar4, star4Tangle, Color.White);
                 _spriteBatch.Draw(star4.Texture, star4Tangle, blackHoleSource, Color.White);
+
+            }
+            else if (screen == Screen.orbitSelect1)
+            {
+                _spriteBatch.Draw(bckgrnd, new Rectangle(0, 0, 1000, 700), Color.White);
+
+
+                star1.Draw(_spriteBatch);
+                star2.Draw(_spriteBatch);
+                star3.Draw(_spriteBatch);
+                _spriteBatch.Draw(star4.Texture, star4.Bounds, blackHoleSource, Color.White);
+
+                buttonReturn.Draw(_spriteBatch);
+
+
 
             }
 
