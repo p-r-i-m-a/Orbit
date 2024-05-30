@@ -34,7 +34,7 @@ public class Button
             _color = Color.Red;  
         }
         else
-            _color = Color.White;
+            _color = Color. White;
     }
 
     public void Draw(SpriteBatch spriteBatch)

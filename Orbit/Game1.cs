@@ -23,6 +23,8 @@ namespace Orbit
         Rectangle blackHoleSource;
         int blackHoleFrame;
         float seconds;
+
+        star selectedStar;
         
 
         star star1, star2, star3, star4;
@@ -39,10 +41,10 @@ namespace Orbit
             intro,
             menu,
             modify,
-            orbitSelect1,
-            orbitSelect2,
-            orbitSelect3,
-            orbitSelect4
+            orbitSelect,
+            //orbitSelect2,
+            //orbitSelect3,
+            //orbitSelect4
         }
 
         Screen screen;
@@ -206,13 +208,8 @@ namespace Orbit
                 }
 
 ;
-                star1.Update(gameTime);
+                UpdateStars(gameTime);
 
-                star2.Update(gameTime);
-                
-                star3.Update(gameTime);
-
-                star4.Update(gameTime);
 
             }
             else if (screen == Screen.menu)
@@ -280,21 +277,31 @@ namespace Orbit
 
                 //orbit cord
 
+
+
                 if (star1orbitB.IsClicked(mouseState, prevMouseState))
                 {
-                    screen = Screen.orbitSelect1;  
+                    selectedStar = star1;
+                    screen = Screen.orbitSelect;  
                 }
                 else if (star2orbitB.IsClicked(mouseState, prevMouseState))
                 {
-                    screen = Screen.orbitSelect2;
+                    selectedStar = star2;
+
+                    screen = Screen.orbitSelect;
                 }
                 else if (star3orbitB.IsClicked(mouseState, prevMouseState))
                 {
-                    screen = Screen.orbitSelect3;
+                    selectedStar = star3;
+
+                    screen = Screen.orbitSelect;
                 }
                 else if (star4orbitB.IsClicked(mouseState, prevMouseState))
                 {
-                    screen = Screen.orbitSelect4;
+                    selectedStar = star4;
+
+
+                    screen = Screen.orbitSelect;
                 }
 
 
@@ -378,98 +385,99 @@ namespace Orbit
 
 
             }
-            else if (screen == Screen.orbitSelect1)
+            //else if (screen == Screen.orbitSelect1)
+            //{
+            //    buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
+
+            //    UpdateStars(gameTime);
+
+
+            //    if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released && !buttonReturn.Bounds.Contains(mouseState.Position))
+            //    {
+            //        star1.SetCenterPosition(new Vector2(mouseState.X, mouseState.Y));
+
+            //    }
+
+            //    if (buttonReturn.IsClicked(mouseState, prevMouseState))
+            //    {
+            //        screen = Screen.modify;
+            //    }
+
+
+            //}
+            //else if (screen == Screen.orbitSelect2)
+            //{
+            //    buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
+
+            //    UpdateStars(gameTime);
+
+
+            //    if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released && !buttonReturn.Bounds.Contains(mouseState.Position))
+            //    {
+            //        star2.SetCenterPosition(new Vector2(mouseState.X, mouseState.Y));
+
+            //    }
+
+            //    if (buttonReturn.IsClicked(mouseState, prevMouseState))
+            //    {
+            //        screen = Screen.modify;
+            //    }
+
+
+            //}
+            //else if (screen == Screen.orbitSelect3)
+            //{
+            //    buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
+
+            //    UpdateStars(gameTime);
+
+
+            //    if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released && !buttonReturn.Bounds.Contains(mouseState.Position))
+            //    {
+            //        star3.SetCenterPosition(new Vector2(mouseState.X, mouseState.Y));
+
+            //    }
+
+            //    if (buttonReturn.IsClicked(mouseState, prevMouseState))
+            //    {
+            //        screen = Screen.modify;
+            //    }
+
+
+            //}
+            else if (screen == Screen.orbitSelect)
             {
                 buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
 
-                star1.Update(gameTime);
+                UpdateStars(gameTime);
 
-                star2.Update(gameTime);
-
-                star3.Update(gameTime);
-
-                star4.Update(gameTime);
-
-                if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
+                if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released && !buttonReturn.Bounds.Contains(mouseState.Position))
                 {
-                    star1.SetCenterPosition(new Vector2(mouseState.X, mouseState.Y));
+                    
+                    
+                    
+                    selectedStar.SetCenterPosition(new Vector2(mouseState.X, mouseState.Y));
+                    selectedStar.OrbitingStar = null;
+
+                    if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released && star1.Bounds.Contains(mouseState.Position))
+                    {
+                        selectedStar.OrbitingStar = star1;
+                    }
+                    else if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released && star2.Bounds.Contains(mouseState.Position))
+                    {
+                        selectedStar.OrbitingStar = star2;
+                    }
+                    else if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released && star3.Bounds.Contains(mouseState.Position))
+                    {
+                        selectedStar.OrbitingStar = star3;
+                    }
+                    else if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released && star4.Bounds.Contains(mouseState.Position))
+                    {
+                        selectedStar.OrbitingStar = star4;
+                    }
 
                 }
 
-                if (buttonReturn.IsClicked(mouseState, prevMouseState))
-                {
-                    screen = Screen.modify;
-                }
-
-
-            }
-            else if (screen == Screen.orbitSelect2)
-            {
-                buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
-
-                star1.Update(gameTime);
-
-                star2.Update(gameTime);
-
-                star3.Update(gameTime);
-
-                star4.Update(gameTime);
-
-                if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
-                {
-                    star2.SetCenterPosition(new Vector2(mouseState.X, mouseState.Y));
-
-                }
-
-                if (buttonReturn.IsClicked(mouseState, prevMouseState))
-                {
-                    screen = Screen.modify;
-                }
-
-
-            }
-            else if (screen == Screen.orbitSelect3)
-            {
-                buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
-
-                star1.Update(gameTime);
-
-                star2.Update(gameTime);
-
-                star3.Update(gameTime);
-
-                star4.Update(gameTime);
-
-                if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
-                {
-                    star3.SetCenterPosition(new Vector2(mouseState.X, mouseState.Y));
-
-                }
-
-                if (buttonReturn.IsClicked(mouseState, prevMouseState))
-                {
-                    screen = Screen.modify;
-                }
-
-
-            }
-            else if (screen == Screen.orbitSelect4)
-            {
-                buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
-
-                star1.Update(gameTime);
-
-                star2.Update(gameTime);
-
-                star3.Update(gameTime);
-
-                star4.Update(gameTime);
-
-                if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
-                {
-                    star4.SetCenterPosition(new Vector2(mouseState.X, mouseState.Y));
-
-                }
 
                 if (buttonReturn.IsClicked(mouseState, prevMouseState))
                 {
@@ -568,7 +576,7 @@ namespace Orbit
                 _spriteBatch.Draw(star4.Texture, star4Tangle, blackHoleSource, Color.White);
 
             }
-            else if (screen == Screen.orbitSelect1)
+            else if (screen == Screen.orbitSelect)
             {
                 _spriteBatch.Draw(bckgrnd, new Rectangle(0, 0, 1000, 700), Color.White);
 
@@ -583,13 +591,68 @@ namespace Orbit
 
 
             }
+            //else if (screen == Screen.orbitSelect2)
+            //{
+            //    _spriteBatch.Draw(bckgrnd, new Rectangle(0, 0, 1000, 700), Color.White);
 
+
+            //    star1.Draw(_spriteBatch);
+            //    star2.Draw(_spriteBatch);
+            //    star3.Draw(_spriteBatch);
+            //    _spriteBatch.Draw(star4.Texture, star4.Bounds, blackHoleSource, Color.White);
+
+            //    buttonReturn.Draw(_spriteBatch);
+
+
+
+            //}
+            //else if (screen == Screen.orbitSelect3)
+            //{
+            //    _spriteBatch.Draw(bckgrnd, new Rectangle(0, 0, 1000, 700), Color.White);
+
+
+            //    star1.Draw(_spriteBatch);
+            //    star2.Draw(_spriteBatch);
+            //    star3.Draw(_spriteBatch);
+            //    _spriteBatch.Draw(star4.Texture, star4.Bounds, blackHoleSource, Color.White);
+
+            //    buttonReturn.Draw(_spriteBatch);
+
+
+
+            //}
+            //else if (screen == Screen.orbitSelect4)
+            //{
+            //    _spriteBatch.Draw(bckgrnd, new Rectangle(0, 0, 1000, 700), Color.White);
+
+
+            //    star1.Draw(_spriteBatch);
+            //    star2.Draw(_spriteBatch);
+            //    star3.Draw(_spriteBatch);
+            //    _spriteBatch.Draw(star4.Texture, star4.Bounds, blackHoleSource, Color.White);
+
+            //    buttonReturn.Draw(_spriteBatch);
+
+
+
+            //}
 
 
 
 
             _spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+       
+
+
+        public void UpdateStars(GameTime gameTime)
+        {
+            star1.Update(gameTime);
+            star2.Update(gameTime);
+            star3.Update(gameTime);
+            star4.Update(gameTime);
         }
     }
 }

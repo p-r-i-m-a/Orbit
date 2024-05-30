@@ -16,6 +16,7 @@ namespace Orbit
         public float _orbitSpeed;
         private float _angle;
         private Vector2 _centerPosition;
+        private star orbitingStar;
 
 
         public star(Texture2D texture, Rectangle rect, float orbitRadius, float orbitSpeed, Vector2 centerPosition)
@@ -26,6 +27,13 @@ namespace Orbit
             _orbitSpeed = orbitSpeed;
             _centerPosition = centerPosition;
             _angle = 0;
+            orbitingStar = null;
+        }
+
+        public star OrbitingStar
+        {
+            get { return orbitingStar; }
+            set { orbitingStar = value; }
         }
 
         public void SetCenterPosition(Vector2 newCenterPosition)
@@ -53,6 +61,11 @@ namespace Orbit
         public void Update(GameTime gameTime)
         {
             _angle += _orbitSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (orbitingStar != null )
+            {
+                _centerPosition = OrbitingStar.Bounds.Center.ToVector2();
+            }
 
             // Update position based on orbiting motion
             _rectangle.X = (int)(_centerPosition.X + Math.Cos(_angle) * _orbitRadius);
