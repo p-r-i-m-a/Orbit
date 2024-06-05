@@ -62,6 +62,9 @@
 /processorParam:TextureFormat=Compressed
 /build:font.spritefont
 
+#begin Game Of Squids.ttf
+/copy:Game Of Squids.ttf
+
 #begin starB.png
 /importer:TextureImporter
 /processor:TextureProcessor
