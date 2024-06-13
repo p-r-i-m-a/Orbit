@@ -15,7 +15,7 @@ namespace Orbit
         private SpriteBatch _spriteBatch;
         MouseState mouseState, prevMouseState;
         Song music;
-        SpriteFont menuFont, returnFont, exitFont, modFont, distanceFont, speedFont, distanceFontd, speedFontd, orbitFont;
+        SpriteFont menuFont, returnFont, exitFont, modFont, distanceFont, speedFont, distanceFontd, speedFontd, orbitFont, allFont;
         Texture2D starB, starY, starR, blackHole, bckgrnd, button, menuStar1, menuStar2, menuStar3, menuStar4;
         Rectangle window;
         Vector2 star1orbit, star2orbit, star3orbit, star4orbit;
@@ -154,6 +154,7 @@ namespace Orbit
             speedFont = Content.Load<SpriteFont>("font");
             speedFontd = Content.Load<SpriteFont>("font");
             orbitFont = Content.Load<SpriteFont>("font");
+            allFont = Content.Load<SpriteFont>("font");
 
 
             menuStar1 = Content.Load<Texture2D>("starB");
@@ -223,7 +224,7 @@ namespace Orbit
 
 
                 buttonReturn = new Button(button, new Rectangle(450, 100, 50, 25));
-
+                buttonReturn.Update(mouseState, prevMouseState);
 
                 if (buttonExit.IsClicked(mouseState, prevMouseState))
                 {
@@ -248,6 +249,12 @@ namespace Orbit
                         blackHoleFrame = 0;
                     blackHoleSource.X = blackHoleFrame * 135;
                 }
+
+                allSpeedUp.Update(mouseState, prevMouseState);
+                allSpeedDown.Update(mouseState, prevMouseState);
+                allDistanceUp.Update(mouseState, prevMouseState);
+                allDistanceDown.Update(mouseState, prevMouseState);
+                allOrbitChange.Update(mouseState, prevMouseState);
 
                 star1SpeedUp.Update(mouseState, prevMouseState);
                 star1SpeedDown.Update(mouseState, prevMouseState);
@@ -275,6 +282,8 @@ namespace Orbit
                 star4orbitB.Update(mouseState, prevMouseState);
 
                 buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
+
+                buttonReturn.Update(mouseState, prevMouseState);
 
                 if (buttonReturn.IsClicked(mouseState, prevMouseState))
                 {
@@ -435,70 +444,10 @@ namespace Orbit
                 
 
             }
-            //else if (screen == Screen.orbitSelect1)
-            //{
-            //    buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
-
-            //    UpdateStars(gameTime);
-
-
-            //    if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released && !buttonReturn.Bounds.Contains(mouseState.Position))
-            //    {
-            //        star1.SetCenterPosition(new Vector2(mouseState.X, mouseState.Y));
-
-            //    }
-
-            //    if (buttonReturn.IsClicked(mouseState, prevMouseState))
-            //    {
-            //        screen = Screen.modify;
-            //    }
-
-
-            //}
-            //else if (screen == Screen.orbitSelect2)
-            //{
-            //    buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
-
-            //    UpdateStars(gameTime);
-
-
-            //    if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released && !buttonReturn.Bounds.Contains(mouseState.Position))
-            //    {
-            //        star2.SetCenterPosition(new Vector2(mouseState.X, mouseState.Y));
-
-            //    }
-
-            //    if (buttonReturn.IsClicked(mouseState, prevMouseState))
-            //    {
-            //        screen = Screen.modify;
-            //    }
-
-
-            //}
-            //else if (screen == Screen.orbitSelect3)
-            //{
-            //    buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
-
-            //    UpdateStars(gameTime);
-
-
-            //    if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released && !buttonReturn.Bounds.Contains(mouseState.Position))
-            //    {
-            //        star3.SetCenterPosition(new Vector2(mouseState.X, mouseState.Y));
-
-            //    }
-
-            //    if (buttonReturn.IsClicked(mouseState, prevMouseState))
-            //    {
-            //        screen = Screen.modify;
-            //    }
-
-
-            //}
             else if (screen == Screen.orbitSelect)
             {
                 buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
-
+                buttonReturn.Update(mouseState, prevMouseState);
                 UpdateStars(gameTime);
 
                 if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released && !buttonReturn.Bounds.Contains(mouseState.Position))
@@ -541,7 +490,7 @@ namespace Orbit
             else if (screen == Screen.orbitSelectAll)
             {
                 buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
-
+                buttonReturn.Update(mouseState, prevMouseState);
                 UpdateStars(gameTime);
 
                 if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released && !buttonReturn.Bounds.Contains(mouseState.Position))
@@ -605,7 +554,7 @@ namespace Orbit
 
                 buttonReturn.Draw(_spriteBatch);
                 _spriteBatch.DrawString(returnFont, "Return", new Vector2(buttonReturn.Bounds.X, buttonReturn.Bounds.Y), Color.Black);
-
+                _spriteBatch.DrawString(allFont, "All", new Vector2(star4Tangle.Right + 25, star4Tangle.Bottom - 25), Color.White);
 
                 star1DistanceUp.Draw(_spriteBatch);
                 star1DistanceDown.Draw(_spriteBatch);
@@ -667,6 +616,7 @@ namespace Orbit
 
                 buttonReturn.Draw(_spriteBatch);
 
+                _spriteBatch.DrawString(returnFont, "Return", new Vector2(buttonReturn.Bounds.X, buttonReturn.Bounds.Y), Color.Black);
 
 
             }
@@ -681,6 +631,8 @@ namespace Orbit
                 _spriteBatch.Draw(star4.Texture, star4.Bounds, blackHoleSource, Color.White);
 
                 buttonReturn.Draw(_spriteBatch);
+                _spriteBatch.DrawString(returnFont, "Return", new Vector2(buttonReturn.Bounds.X, buttonReturn.Bounds.Y), Color.Black);
+
             }
 
 
