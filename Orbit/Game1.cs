@@ -16,9 +16,9 @@ namespace Orbit
         MouseState mouseState, prevMouseState;
         Song music;
         SpriteFont menuFont, returnFont, exitFont, modFont, distanceFont, speedFont, distanceFontd, speedFontd, orbitFont, allFont;
-        Texture2D starB, starY, starR, blackHole, bckgrnd, button, menuStar1, menuStar2, menuStar3, menuStar4;
+        Texture2D starB, starY, starR, blackHole, bckgrnd, button, menuStar1, menuStar2, menuStar3, menuStar4, ship;
         Rectangle window;
-        Vector2 star1orbit, star2orbit, star3orbit, star4orbit;
+        Vector2 star1orbit, star2orbit, star3orbit, star4orbit, probeCord;
 
         Rectangle blackHoleSource;
         int blackHoleFrame;
@@ -65,6 +65,8 @@ namespace Orbit
         protected override void Initialize()
         {
             Random generator = new Random();
+
+            probeCord = new Vector2(0,0);
 
             screen = Screen.intro;
 
@@ -169,6 +171,7 @@ namespace Orbit
             starY = Content.Load<Texture2D>("starY");
             starR = Content.Load<Texture2D>("starR");
             blackHole = Content.Load<Texture2D>("blackHole");
+            ship = Content.Load<Texture2D>("probe");
 
 
 
@@ -207,6 +210,7 @@ namespace Orbit
                 }
 
 
+
                 buttonMenu.Update(mouseState, prevMouseState);
 
                 if (buttonMenu.IsClicked(mouseState, prevMouseState))
@@ -214,7 +218,41 @@ namespace Orbit
                     screen = Screen.menu;
                 }
 
-;
+                KeyboardState keyboardStatr = Keyboard.GetState();
+
+                if (keyboardStatr.IsKeyDown(Keys.W))
+                {
+                    probeCord = new Vector2(probeCord.X, probeCord.Y - 5);
+                }
+                else if (keyboardStatr.IsKeyDown(Keys.W) && keyboardStatr.IsKeyDown(Keys.A))
+                {
+                    probeCord = new Vector2(probeCord.X - 5, probeCord.Y - 5);
+                }
+                else if (keyboardStatr.IsKeyDown(Keys.W) && keyboardStatr.IsKeyDown(Keys.D))
+                {
+                    probeCord = new Vector2(probeCord.X + 5, probeCord.Y - 5);
+                }
+                else if (keyboardStatr.IsKeyDown(Keys.S))
+                {
+                    probeCord = new Vector2(probeCord.X, probeCord.Y + 5);
+                }
+                else if (keyboardStatr.IsKeyDown(Keys.D) && keyboardStatr.IsKeyDown(Keys.S))
+                {
+                    probeCord = new Vector2(probeCord.X + 5, probeCord.Y + 5);
+                }
+                else if (keyboardStatr.IsKeyDown(Keys.S) && keyboardStatr.IsKeyDown(Keys.A))
+                {
+                    probeCord = new Vector2(probeCord.X - 5, probeCord.Y + 5);
+                }
+                else if (keyboardStatr.IsKeyDown(Keys.A))
+                {
+                    probeCord = new Vector2(probeCord.X - 5, probeCord.Y);
+                }
+                else if (keyboardStatr.IsKeyDown(Keys.D))
+                {
+                    probeCord = new Vector2(probeCord.X + 5, probeCord.Y);
+                }
+
                 UpdateStars(gameTime);
 
 
@@ -523,6 +561,7 @@ namespace Orbit
 
             if(screen == Screen.intro)
             {
+                _spriteBatch.Draw(ship, probeCord, Color.White);
                 star1.Draw(_spriteBatch);
                 star2.Draw(_spriteBatch);
                 star3.Draw(_spriteBatch);
