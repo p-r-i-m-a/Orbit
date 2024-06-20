@@ -587,13 +587,14 @@ namespace Orbit
 
             if(screen == Screen.intro)
             {
-                _spriteBatch.Draw(ship, probeCord, Color.White);
                 star1.Draw(_spriteBatch);
                 star2.Draw(_spriteBatch);
                 star3.Draw(_spriteBatch);
                 //star4.Draw(_spriteBatch);
                 _spriteBatch.Draw(star4.Texture, star4.Bounds, blackHoleSource, Color.White);
-                
+                _spriteBatch.Draw(ship, probeCord, Color.White);
+
+
                 buttonMenu.Draw(_spriteBatch);
                 _spriteBatch.DrawString(menuFont, "Menu", new Vector2(buttonMenu.Bounds.X, buttonMenu.Bounds.Y), Color.Black);
             }
