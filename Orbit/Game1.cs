@@ -15,10 +15,11 @@ namespace Orbit
         private SpriteBatch _spriteBatch;
         MouseState mouseState, prevMouseState;
         Song music;
-        SpriteFont menuFont, returnFont, exitFont, modFont, distanceFont, speedFont, distanceFontd, speedFontd, orbitFont, allFont;
+        SpriteFont shuffleFont, menuFont, returnFont, exitFont, modFont, distanceFont, speedFont, distanceFontd, speedFontd, orbitFont, allFont;
         Texture2D starB, starY, starR, blackHole, bckgrnd, button, menuStar1, menuStar2, menuStar3, menuStar4, ship;
         Rectangle window;
         Vector2 star1orbit, star2orbit, star3orbit, star4orbit, probeCord;
+        Random shuffle = new Random();
 
         Rectangle blackHoleSource;
         int blackHoleFrame;
@@ -34,7 +35,7 @@ namespace Orbit
         
 
         star star1, star2, star3, star4;
-        Button buttonMenu, buttonExit, buttonStarMod, buttonReturn, star1SpeedUp, star1SpeedDown, star1DistanceUp, star1DistanceDown, star2SpeedUp, star2SpeedDown, star2DistanceUp, star2DistanceDown, star3SpeedUp, star3SpeedDown, star3DistanceUp, star3DistanceDown, star4SpeedUp, star4SpeedDown, star4DistanceUp, star4DistanceDown, star1orbitB, star2orbitB, star3orbitB, star4orbitB, allSpeedUp, allSpeedDown, allDistanceUp, allDistanceDown, allOrbitChange;
+        Button buttonShuffle, buttonMenu, buttonExit, buttonStarMod, buttonReturn, star1SpeedUp, star1SpeedDown, star1DistanceUp, star1DistanceDown, star2SpeedUp, star2SpeedDown, star2DistanceUp, star2DistanceDown, star3SpeedUp, star3SpeedDown, star3DistanceUp, star3DistanceDown, star4SpeedUp, star4SpeedDown, star4DistanceUp, star4DistanceDown, star1orbitB, star2orbitB, star3orbitB, star4orbitB, allSpeedUp, allSpeedDown, allDistanceUp, allDistanceDown, allOrbitChange;
 
         Rectangle star1Tangle = new Rectangle(250, 79, 29, 29);
         Rectangle star2Tangle = new Rectangle(408, 79, 29, 29);
@@ -93,7 +94,7 @@ namespace Orbit
             allDistanceUp = new Button(button, new Rectangle(550, 275, 50, 25));
             allDistanceDown = new Button(button, new Rectangle(550, 350, 50, 25));
             allOrbitChange = new Button(button, new Rectangle(550, 425, 50, 25));
-
+            buttonShuffle = new Button(button, new Rectangle(700, 275, 50, 25));
 
             star1SpeedUp = new Button(button, new Rectangle(250, 125, 50, 25));
             star1SpeedDown = new Button(button, new Rectangle(250, 200, 50, 25));
@@ -157,7 +158,7 @@ namespace Orbit
             speedFontd = Content.Load<SpriteFont>("font");
             orbitFont = Content.Load<SpriteFont>("font");
             allFont = Content.Load<SpriteFont>("font");
-
+            shuffleFont = Content.Load<SpriteFont>("font");
 
             menuStar1 = Content.Load<Texture2D>("starB");
             menuStar2 = Content.Load<Texture2D>("starY");
@@ -319,6 +320,8 @@ namespace Orbit
                 star3orbitB.Update(mouseState, prevMouseState);
                 star4orbitB.Update(mouseState, prevMouseState);
 
+                buttonShuffle.Update(mouseState, prevMouseState);
+
                 buttonReturn = new Button(button, new Rectangle(1, 1, 50, 25));
 
                 buttonReturn.Update(mouseState, prevMouseState);
@@ -479,7 +482,30 @@ namespace Orbit
                     star4._orbitRadius = (star4._orbitRadius - 20);
                 }
 
-                
+                if (buttonShuffle.IsClicked(mouseState, prevMouseState))
+                {
+                    star1._orbitSpeed = shuffle.Next(-5, 5); 
+                    star2._orbitSpeed = shuffle.Next(-5, 5); 
+                    star3._orbitSpeed = shuffle.Next(-5, 5); 
+                    star4._orbitSpeed = shuffle.Next(-5, 5); 
+
+                    star1._orbitRadius = shuffle.Next(1, 250);
+                    star2._orbitRadius = shuffle.Next(1, 250);
+                    star3._orbitRadius = shuffle.Next(1, 250);
+                    star4._orbitRadius = shuffle.Next(1, 250);
+
+                    selectedStar = star1;
+                    selectedStar.SetCenterPosition(new Vector2(shuffle.Next(1, 1000), shuffle.Next(1, 700)));
+                    selectedStar = star2;
+                    selectedStar.SetCenterPosition(new Vector2(shuffle.Next(1, 1000), shuffle.Next(1, 700)));
+                    selectedStar = star3;
+                    selectedStar.SetCenterPosition(new Vector2(shuffle.Next(1, 1000), shuffle.Next(1, 700)));
+                    selectedStar = star4;
+                    selectedStar.SetCenterPosition(new Vector2(shuffle.Next(1, 1000), shuffle.Next(1, 700)));
+                    
+
+
+                }
 
             }
             else if (screen == Screen.orbitSelect)
@@ -622,6 +648,8 @@ namespace Orbit
                 star3orbitB.Draw(_spriteBatch);
                 star4orbitB.Draw(_spriteBatch);
 
+                buttonShuffle.Draw(_spriteBatch);
+                _spriteBatch.DrawString(shuffleFont,"Shuffle All", new Vector2(buttonShuffle.Bounds.X - 10, buttonShuffle.Bounds.Y - 15), Color.White);
 
                 _spriteBatch.DrawString(distanceFont, "Distance Up:", new Vector2(star1DistanceUp.Bounds.X - 150, star1DistanceUp.Bounds.Y), Color.White);
                 _spriteBatch.DrawString(distanceFontd, "Distance Down:", new Vector2(star1DistanceDown.Bounds.X - 150, star1DistanceDown.Bounds.Y), Color.White);
